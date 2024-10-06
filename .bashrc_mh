@@ -13,6 +13,13 @@ fi
 export DENO_INSTALL="/home/martin/.deno"
 export PATH="$HOME/.npm-global/bin:$DENO_INSTALL/bin:$HOME/.local/bin:$PATH"
 
+if command -v node >/dev/null; then
+    source <(node --completion-bash)
+fi
+if command -v npm >/dev/null; then
+    source <(npm completion)
+fi
+
 commit() {
     if [ "$1" = "-m" ] || [ "$2" = "-m" ] || [ "$3" = "-m" ]; then
         git commit "$@"
@@ -28,6 +35,8 @@ commitp() {
 alias add='git add'
 alias co='git checkout'
 
+alias npr='npm run'
+
 # alias commit='git commit -m'
 alias sctl='systemctl'
 alias status='systemctl status'
@@ -41,6 +50,8 @@ if [ -f ~/.complete_alias ]; then
     # complete -F _complete_alias commit
     complete -F _complete_alias add
     complete -F _complete_alias co
+
+    complete -F _complete_alias npr
 
     complete -F _complete_alias sctl
     complete -F _complete_alias status
