@@ -30,3 +30,5 @@ fi
 else
     echo "File .bashrc_mh is already being loaded."
 fi
+
+git config --global alias.diffc 'diff --cached'

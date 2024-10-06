@@ -25,6 +25,7 @@ commitp() {
     commit "$@" && git push
 }
 
+alias add='git add'
 alias co='git checkout'
 
 # alias commit='git commit -m'
@@ -38,6 +39,7 @@ alias disable='systemctl disable'
 if [ -f ~/.complete_alias ]; then
     . ~/.complete_alias
     # complete -F _complete_alias commit
+    complete -F _complete_alias add
     complete -F _complete_alias co
 
     complete -F _complete_alias sctl
@@ -46,5 +48,4 @@ if [ -f ~/.complete_alias ]; then
     complete -F _complete_alias stop
     complete -F _complete_alias enable
     complete -F _complete_alias disable
-    echo "Completing stuff"
 fi
