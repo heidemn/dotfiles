@@ -1,0 +1,50 @@
+PORTKILL() {
+	fuser -k "$1"/tcp
+}
+alias PK=PORTKILL
+
+# https://github.com/containers/podman/issues/9447
+#alias podman="sudo podman"
+
+if [ -f "$HOME/.cargo/env" ]; then
+	. "$HOME/.cargo/env"
+fi
+
+export DENO_INSTALL="/home/martin/.deno"
+export PATH="$HOME/.npm-global/bin:$DENO_INSTALL/bin:$HOME/.local/bin:$PATH"
+
+commit() {
+    if [ "$1" = "-m" ] || [ "$2" = "-m" ] || [ "$3" = "-m" ]; then
+        git commit "$@"
+    else
+        git commit -m "$@"
+    fi
+}
+
+commitp() {
+    commit "$@" && git push
+}
+
+alias co='git checkout'
+
+# alias commit='git commit -m'
+alias sctl='systemctl'
+alias status='systemctl status'
+alias start='systemctl start'
+alias stop='systemctl stop'
+alias enable='systemctl enable'
+alias disable='systemctl disable'
+
+if [ -f ~/.complete_alias ]; then
+    . ~/.complete_alias
+    # complete -F _complete_alias commit
+    complete -F _complete_alias co
+
+    complete -F _complete_alias sctl
+    complete -F _complete_alias status
+    complete -F _complete_alias start
+    complete -F _complete_alias stop
+    complete -F _complete_alias enable
+    complete -F _complete_alias disable
+    echo "Completing stuff"
+fi
