@@ -7,14 +7,20 @@ if ! [ -f ~/.complete_alias ]; then
     curl -o ~/.complete_alias https://raw.githubusercontent.com/cykerway/complete-alias/f09f5c2f37ed5411cb21c145b01a3b4f919b9f9a/complete_alias
 fi
 
-if ! command -v npm >/dev/null; then
-    echo "ERROR: npm is not installed"
-    exit 1
+if [ -d ~/.nvm ]; then
+    echo "NVM is installed. Skipping npm prefix."
+else
+    echo "NVM is not installed. Setting up npm prefix."
+    if ! command -v npm >/dev/null; then
+        echo "ERROR: npm is not installed"
+        exit 1
+    fi
+    mkdir -p $HOME/.npm-global/bin
+    npm config set prefix $HOME/.npm-global
 fi
-mkdir -p $HOME/.npm-global/bin
-npm config set prefix $HOME/.npm-global
 
 if ! [ -f ~/.bashrc_mh ]; then
+    echo "Setting up symlink ~/.bashrc_mh..."
     ln -sv $PWD/.bashrc_mh ~/.bashrc_mh
 fi
 

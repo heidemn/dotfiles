@@ -10,9 +10,16 @@ if [ -f "$HOME/.cargo/env" ]; then
 	. "$HOME/.cargo/env"
 fi
 
-export DENO_INSTALL="/home/martin/.deno"
-export PATH="$HOME/.npm-global/bin:$DENO_INSTALL/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
+export DENO_INSTALL="/home/martin/.deno"
+if [ -d "$DENO_INSTALL/bin" ]; then
+    export PATH="$DENO_INSTALL/bin:$PATH"
+fi
+
+if [ -d "$HOME/.npm-global/bin" ]; then
+    export PATH="$HOME/.npm-global/bin:$PATH"
+fi
 if command -v node >/dev/null; then
     source <(node --completion-bash)
 fi
@@ -32,9 +39,19 @@ commitp() {
     commit "$@" && git push
 }
 
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias ls='ls --color=auto'
+
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+
 alias add='git add'
 alias co='git checkout'
 
+alias nr='npm run'
 alias npr='npm run'
 
 # alias commit='git commit -m'
